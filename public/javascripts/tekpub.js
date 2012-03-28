@@ -12,8 +12,7 @@ TekpubView = Backbone.View.extend({
     }else{
       html = compiled(data);
     }
-    console.log(html);
-    $(this.el).html(html);
+    $(this.options.el).html(html);
   }
 });
 
@@ -47,10 +46,10 @@ TekpubRouter = Backbone.Router.extend({
     "production/:slug" : "production"
   },
   home : function() {
-    tekpub.showHome();
+    Tekpub.showHome();
   },
   production: function(slug){
-    tekpub.showProduction(slug);
+    Tekpub.showProduction(slug);
   }
 });
 
@@ -63,8 +62,8 @@ Tekpub = function() {
   _loaded = false;
 
   var _homeView = new HomeView({el:"#app", template : "#homeTemplate"});
-  var _productionView = new ProductionView({el:"#main", template : "#viewerTemplate"});
-  var _productionMenuView = new ProductionMenuView({el : "#menu", template : "#productionMenuTemplate"})
+  var _productionView = new ProductionView({el:"#app", template : "#viewerTemplate"});
+  var _productionMenuView = new ProductionMenuView({el : "#app", template : "#productionMenuTemplate"})
   
   var _featured = function(){
      return _data.productions.filter(function(p){
@@ -94,8 +93,15 @@ Tekpub = function() {
   }
   var _showHome = function(){
     _clear();
+    console.log(_homeView)
     var featuredProductions = _featured();
-    _homeView.render({logo:data.logoLarge, splash : data.splash, descriptors: data.descriptors, special:_special, featured : featuredProductions});
+    _homeView.render({
+      logo: _data.logoLarge, 
+      splash : _data.splash, 
+      descriptors: _data.descriptors, 
+      special:_special, 
+      featured : featuredProductions
+    });
   };
 
   var _showMenu = function(){
@@ -111,14 +117,7 @@ Tekpub = function() {
   var _showProduction =function (slug){
     _clear();
     _showMenu();
-    
-    // _selected = _productions.filter(function(p){return p.slug == slug});
-    // $.get(_selected.link,function(data){
-    //   model = new Production(data);
-    //   console.log(model);
-    //   _productionView.render();
-    // });
-    
+
   };
 
   var _canDownload = function(slug){
@@ -156,6 +155,7 @@ Tekpub = function() {
     canDownload : _canDownload
   }
 
-};
-tekpub = Tekpub();
+}();
+
+console.log("Tekpub is... " + Tekpub);
 

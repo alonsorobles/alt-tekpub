@@ -1,7 +1,7 @@
 mongoose = require('mongoose');
 Productions = require("../lib/productions")
 should = require("should")
-mongoose.connect('mongodb://localhost/tekpub_test');  
+mongoose.connect('mongodb://localhost/tekpub_test')
 
 describe "Productions", ->
 

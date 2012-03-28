@@ -1,7 +1,7 @@
 script
   $().ready(function() {
     $.get("/api", function(data){
-      tekpub = tekpub.load(data);
+      Tekpub.load(data);
       app = new TekpubRouter();
       Backbone.history.start({pushState:true});
     },"json");
